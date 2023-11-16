@@ -39,7 +39,20 @@ public:
 
     void OnLogin(Player* player) {
         if (stimeistime_enable && stimeistime_announce)
-            ChatHandler(player->GetSession()).SendSysMessage("This server is running the |cff4CFF00TimeIsTime |rmodule");
+        {
+            WorldSession* session = player->GetSession();
+            switch (session->GetSessionDbLocaleIndex())
+            {
+            case LOCALE_ruRU:
+            {
+                ChatHandler(player->GetSession()).SendSysMessage("На сервере запущен модуль |cff4CFF00TimeIsTime |r");
+                break;
+            }
+            default:
+                ChatHandler(player->GetSession()).SendSysMessage("This server is running the |cff4CFF00TimeIsTime |rmodule.");
+                break;
+            }
+        }
     }
 	
     void OnSendInitialPacketsBeforeAddToMap(Player* player, WorldPacket& data) override {
